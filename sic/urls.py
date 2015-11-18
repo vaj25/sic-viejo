@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from contable.views import ingresar,inicio,nuevo_usuario
+from contable.views import ingresar,inicio,nuevo_usuario, transaccion
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)) ,
-    url(r'^index/', 'contable.views.inicio') ,    
+    url(r'^index/', 'contable.views.inicio') ,
     url(r'^ingresar/$', 'contable.views.ingresar') ,
     url(r'^usuario/nuevo$','contable.views.nuevo_usuario'),
     url(r'^cerrar/$', 'contable.views.cerrar'),
@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^planilla/empleados', 'contable.views.planillaEmpleados') ,
     url(r'^catalogo/cuentas', 'contable.views.catalogoCuentas') ,
     url(r'^$',ingresar),
+    url(r'^transaccion', transaccion) ,
 ]

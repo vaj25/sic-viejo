@@ -57,7 +57,7 @@ def nuevo_usuario(request):
 		formulario=UserCreationForm(request.POST)
 		#clave1 = request.POST['password1']
 		#clave2 = request.POST['password2']
-		
+
 		if formulario.is_valid():# and (clave1 == clave2):
 		#	p = Perfil()
 		#	p.nickname = request.POST['username']
@@ -69,7 +69,7 @@ def nuevo_usuario(request):
 		#	m.partidasGanadas=0
 		#	m.perfil_id=p.id
 		#	m.save()
-			
+
 			formulario.save()
 			return HttpResponseRedirect('/')
 		#else:
@@ -77,12 +77,12 @@ def nuevo_usuario(request):
 	else:
 		formulario=UserCreationForm()
 	return render_to_response('nuevousuario.html',{'formulario':formulario}, context_instance=RequestContext(request))
-    
-    
-@login_required(login_url='/ingresar')    
+
+
+@login_required(login_url='/ingresar')
 def cerrar(request):
 	logout(request)
-	return HttpResponseRedirect('/ingresar')    
+	return HttpResponseRedirect('/ingresar')
 
 
 
@@ -111,4 +111,7 @@ def ingresar_cuenta(request):
     args={}
     args.update(csrf(request))
     args['cuentForm'] = cuentForm
-    return render_to_response('registrar_cuenta.html', args)      
+    return render_to_response('registrar_cuenta.html', args)
+
+def transaccion(request):
+    return render_to_response('form-transaccion.html')
