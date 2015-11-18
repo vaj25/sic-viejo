@@ -113,8 +113,31 @@ table {
     border: 2px solid #000;
 }
 
+.seccion {
+    width: 90% ;
+    margin: auto ;
+    padding: 5px ;
+}
 
+.form {
+    margin: auto;
+}
 
+.columna {
+    width: 49% ;
+    float: left ;
+    padding: 5px ;
+    text-align: center ;
+}
+
+.fila {
+    padding: 5px ;
+    
+}
+
+.fila-remove {
+    display: none ;
+}
 
 
 

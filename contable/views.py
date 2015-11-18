@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from contable.forms import UserCreationForm,EmpleadoForm,CuentaForm
-from contable.models import Empleado,Puesto
+from contable.models import Empleado,Puesto,Cuenta,TipoCuenta,Transaccion, TipoMonto
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -57,7 +57,7 @@ def nuevo_usuario(request):
 		formulario=UserCreationForm(request.POST)
 		#clave1 = request.POST['password1']
 		#clave2 = request.POST['password2']
-		
+
 		if formulario.is_valid():# and (clave1 == clave2):
 		#	p = Perfil()
 		#	p.nickname = request.POST['username']
@@ -69,7 +69,7 @@ def nuevo_usuario(request):
 		#	m.partidasGanadas=0
 		#	m.perfil_id=p.id
 		#	m.save()
-			
+
 			formulario.save()
 			return HttpResponseRedirect('/')
 		#else:
@@ -77,12 +77,12 @@ def nuevo_usuario(request):
 	else:
 		formulario=UserCreationForm()
 	return render_to_response('nuevousuario.html',{'formulario':formulario}, context_instance=RequestContext(request))
-    
-    
-@login_required(login_url='/ingresar')    
+
+
+@login_required(login_url='/ingresar')
 def cerrar(request):
 	logout(request)
-	return HttpResponseRedirect('/ingresar')    
+	return HttpResponseRedirect('/ingresar')
 
 
 
@@ -90,21 +90,23 @@ def ingresar_empleado(request):
     if request.POST:
         empForm=EmpleadoForm(request.POST)
         if empForm.is_valid():
-            p = Empleado()
-            m = Puesto()
-            p.nombre = request.POST['nombre']
-            p.apellido = request.POST['apellido']
-            p.salAgregado = request.POST['salAgregado']
-            p.horas = request.POST['horas']
-            p.horasExtras = request.POST['horasExtras']
-            p.dui = request.POST['dui']
-            p.nit = request.POST['nit']
-            m=Puesto.objects.get(id=request.POST['Puesto'])
-            p.puesto = m
-            p.save()
-            #empForm.puesto_id = 1
-            #empForm.save()
-            return HttpResponseRedirect('/index')
+            c=request.POST['Puesto']
+            if (c=="0"):
+                return HttpResponseRedirect('/empleado')
+            else:
+                p = Empleado()
+                m = Puesto()
+                p.nombre = request.POST['nombre']
+                p.apellido = request.POST['apellido']
+                p.salAgregado = 0
+                p.horas = 0
+                p.horasExtras = 0
+                p.dui = request.POST['dui']
+                p.nit = request.POST['nit']
+                m=Puesto.objects.get(id=c)
+                p.puesto = m
+                p.save()
+                return HttpResponseRedirect('/index')
     else:
         empForm=EmpleadoForm()
     args={}
@@ -117,11 +119,52 @@ def ingresar_cuenta(request):
     if request.POST:
         cuentForm=CuentaForm(request.POST)
         if cuentForm.is_valid():
-            cuentForm.save()
-            return HttpResponseRedirect('/index')
+            c=request.POST['Cuenta']
+            if (c=="0"):
+                return HttpResponseRedirect('/cuenta')
+            else:
+                a = Cuenta()
+                s = TipoCuenta()
+                a.nom_cuenta = request.POST['nom_cuenta']
+                a.saldo = request.POST['saldo']
+                s=TipoCuenta.objects.get(id=c)
+                a.tipoCuenta = s
+                a.save()
+                return HttpResponseRedirect('/index')
     else:
         cuentForm=CuentaForm()
     args={}
     args.update(csrf(request))
     args['cuentForm'] = cuentForm
-    return render_to_response('registrar_cuenta.html', args)      
+    return render_to_response('registrar_cuenta.html', args)
+
+def transaccion(request):
+    if request.method == "GET":
+        return render(request ,'form-transaccion.html', {'cuentas':Cuenta.objects.all()})
+    if request.method=='POST':
+        t=Transaccion()
+        tm=TipoMonto()
+        c=Cuenta()
+        u=Transaccion()
+        t.monto=request.POST['monto1']
+        tm=TipoMonto.objects.get(id='1')
+        z=request.POST['cuenta1']
+        c=Cuenta.objects.get(id=z)
+        t.tipoMonto=tm
+        t.cuenta = c
+        t.fecha="2015-11-17"
+        t.save()
+        
+        
+        u.monto=request.POST['monto2']
+        tm=TipoMonto.objects.get(id='2')
+        c=Cuenta.objects.get(id=request.POST['cuenta2'])
+        u.tipoMonto=tm
+        u.cuenta = c
+        u.fecha="2015-11-18"
+        u.save()
+        return HttpResponseRedirect('/index')
+    else:
+        return HttpResponseRedirect('/transaccion')
+
+    
