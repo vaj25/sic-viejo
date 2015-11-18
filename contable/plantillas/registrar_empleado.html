@@ -1,0 +1,9 @@
+<form action="/empleado/" method="post">{% csrf_token %}
+<ul>
+
+{{ empForm.as_ul }}
+
+</ul>
+
+<input type="submit" name="submit" value="Registrar">
+</form>

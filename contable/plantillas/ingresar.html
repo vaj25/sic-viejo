@@ -1,0 +1,26 @@
+{% extends 'basesic.html' %}
+{% block titulo %}
+Ingresa al Sistema
+{% endblock %}
+{% block encabezado %} Login
+{% endblock %}
+{% block static %}
+    <link rel="stylesheet" href="../static/css/form.css">
+{% endblock %}
+{% block contenido %}
+<div>
+    <p>Bienvenido al sistema contable de</p>
+    <p>
+            <img src="../static/img/logo.png" alt="logo" id="logo">
+        </p>
+    <form id='formulario' method='post' action='' autocomplete="on">{% csrf_token %}
+    <!--<table>{{formulario}}</table> -->
+    {{formulario}}
+        <p class="btns"><input type='submit' value='Login' /></p>
+    </form>
+</div>
+<div>
+    Si no eres miembro 
+    <a href='/usuario/nuevo' class="link"><strong>Registrarse</strong></a>
+</div>
+{% endblock %}
