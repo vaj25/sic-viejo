@@ -30,7 +30,7 @@ class UserCreationForm(UserCreationForm):
 class EmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
-        fields = ("nombre","apellido","dui","nit","salAgregado","horas","horasExtras","puesto")
+        fields = ("nombre","apellido","dui","nit","salAgregado","horas","horasExtras")
         
         
 class CuentaForm(forms.ModelForm):
