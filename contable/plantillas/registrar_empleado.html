@@ -1,3 +1,13 @@
+{% extends 'base.html' %}
+{% block static %}
+    <link rel="stylesheet" href="../static/css/form.css">
+{% endblock %}
+ 
+{% block menu %}
+  {% include 'menu.html' %}
+{% endblock %}
+
+{% block contenido %}
 <form action="/empleado/" method="post">{% csrf_token %}
 <ul>
 
@@ -17,3 +27,4 @@
 
 <input type="submit" name="submit" value="Registrar">
 </form>
+{% endblock %}
