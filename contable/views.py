@@ -15,17 +15,16 @@ from django.core.context_processors import csrf
 def inicio(request):
     return render_to_response('index.html')
 
-
-
-
-
-
 def planillaEmpleados(request):
-    return render_to_response('planilla-empleados.html')
+    e=Empleado.objects.all()
+    p=Puesto.objects.all()
+    for puesto in p:
+        a = float(puesto.salBase)*0.065
+        pass
+    return render(request, 'planilla-empleados.html', {'empleado':e, 'puesto':p})
+
 def catalogoCuentas(request):
     return render_to_response('catalogo-cuentas.html')
-
-
 
 def ingresar(request):
     if not request.user.is_anonymous():
@@ -113,7 +112,7 @@ def ingresar_empleado(request):
     args.update(csrf(request))
     args['empForm'] = empForm
     return render_to_response('registrar_empleado.html',args)
-   
+
 
 def ingresar_cuenta(request):
     if request.POST:
@@ -162,5 +161,3 @@ def transaccion(request):
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/transaccion')
-
-    

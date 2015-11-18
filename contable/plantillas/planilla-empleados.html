@@ -22,5 +22,19 @@
       <th>Renta</th>
       <th>Salario a pagar</th>
     </tr>
+    {%for e in empleado %}
+    <tr>
+        <td>{{ e.nombre }}</td>
+        <td>{{ e.apellido }}</td>
+        {% for p in puesto %}
+            {% if p.id == e.puesto_id %}
+                <td>{{ p.nom_puesto }}</td>
+                <td>{{ p.salBase }}</td>
+                <td>0</td>
+                <td>{{ p.salBase }}</td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
   </table>
 {% endblock %}
