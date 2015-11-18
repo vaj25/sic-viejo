@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from contable.forms import UserCreationForm,EmpleadoForm,CuentaForm
-from contable.models import Empleado,Puesto,Cuenta,TipoCuenta,Transaccion
+from contable.models import Empleado,Puesto,Cuenta,TipoCuenta,Transaccion, TipoMonto
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -144,20 +144,23 @@ def transaccion(request):
         t=Transaccion()
         tm=TipoMonto()
         c=Cuenta()
+        u=Transaccion()
         t.monto=request.POST['monto1']
         tm=TipoMonto.objects.get(id="1")
-        c=TipoMonto.objects.get(id="cuenta1")
+        z=request.POST['cuenta1']
+        c=Cuenta.objects.get(id=z)
         t.tipoMonto=tm
         t.cuenta = c
-        t.fecha=0
+        t.fecha="2015-11-17"
         t.save()
-        t.monto=request.POST['monto2']
+
+        u.monto=request.POST['monto2']
         tm=TipoMonto.objects.get(id="2")
-        c=TipoMonto.objects.get(id="cuenta2")
-        t.tipoMonto=tm
-        t.cuenta = c
-        t.fecha=0
-        t.save()
+        c=Cuenta.objects.get(id=request.POST["cuenta2"])
+        u.tipoMonto=tm
+        u.cuenta = c
+        u.fecha="2015-11-17"
+        u.save()
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/transaccion')
