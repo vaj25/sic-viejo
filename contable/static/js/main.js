@@ -1,11 +1,13 @@
-var j = 1 ;
+var j = 1;
+var x = 2 ;
 $('#plus').click(function(){
     for (var i=0; i<2; i++) {
-        var elem = document.createElement('div') ;
-        elem.id = 'fila'+j+''+i ;
-        elem.className = 'fila' ;
-        elem.innerHTML = '<select name="" id=""><option value="">Seleccionar cuenta</option></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text">' ;
-        $('#'+i+'-cuenta').append(elem) ;
+        var form = $('#a').clone() ;
+        form.attr({'id':j+''+i}) ;
+        form.find('select').attr({'id': 'cuenta'+(x), 'name' : 'cuenta'+(x)}) ;
+        form.find('input').attr({'id' : 'monto'+(x), 'name' : 'monto'+(x)})
+        $('#'+i+'-cuenta').append(form) ;
+        x++ ;
         }
     j++ ;
     $('#for').attr({"value" : j}) ;
@@ -13,12 +15,17 @@ $('#plus').click(function(){
 
 $('#less').click(function(){
     for (var i=0; i<2; i++) {
-        var x = j-1 ;
-        $('#fila'+x+''+i).removeClass('fila') ;
-        $('#fila'+x+''+i).addClass('fila-remove') ;
+        $('#'+j+''+i).removeClass('fila') ;
+        $('#'+j+''+i).addClass('fila-remove') ;
     }
     j-- ;
     $('#for').attr({"value" : j}) ;
 }) ;
 
 //$('#form2').clone().appendTo('#'+i+'-cuenta') ;
+//var elem = document.createElement('div') ;
+//        elem.id = 'fila'+j+''+i ;
+//        elem.className = 'fila' ;
+//        var select = $('#form2').clone() ;
+//        select.id = 'cuenta'+j ;
+//        $('#'+i+'-cuenta').append(elem) ;

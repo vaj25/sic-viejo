@@ -14,11 +14,11 @@
             <div class="form">
                 <div class="columna" id="0-cuenta">
                     <h3>Cargo</h3>
-                    <div class="fila">
+                    <div class="fila" id="a">
                         <select name="cuenta1" id="cuenta1">
                             <option value="">Seleccionar cuenta</option>
                             {% for c in cuentas %}
-                                <option value="{{ c.id }}">{{c.nom_cuenta}}</option>
+                                <option value="{{ c.id }}" id="{{ c.id }}">{{c.nom_cuenta}}</option>
                             {% endfor %}
                         </select>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
