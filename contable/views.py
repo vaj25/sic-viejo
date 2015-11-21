@@ -8,6 +8,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
+import time
 #usuarios=''
 
 # Create your views here.
@@ -97,9 +98,12 @@ def ingresar_empleado(request):
                 m = Puesto()
                 p.nombre = request.POST['nombre']
                 p.apellido = request.POST['apellido']
-                p.salAgregado = 0
-                p.horas = 0
                 p.horasExtras = 0
+                p.isss=0
+                p.afp=0
+                p.renta=0
+                p.salDevengado=0
+                p.salPagar=0
                 p.dui = request.POST['dui']
                 p.nit = request.POST['nit']
                 m=Puesto.objects.get(id=c)
@@ -151,7 +155,7 @@ def transaccion(request):
         c=Cuenta.objects.get(id=z)
         t.tipoMonto=tm
         t.cuenta = c
-        t.fecha="2015-11-17"
+        t.fecha=time.strftime("%x")
         t.save()
 
         u.monto=request.POST['monto2']
@@ -159,7 +163,7 @@ def transaccion(request):
         c=Cuenta.objects.get(id=request.POST["cuenta2"])
         u.tipoMonto=tm
         u.cuenta = c
-        u.fecha="2015-11-17"
+        u.fecha=time.strftime("%x") 
         u.save()
         return HttpResponseRedirect('/index')
     else:

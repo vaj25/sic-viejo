@@ -1,4 +1,4 @@
-var j = 0 ;
+var j = 1 ;
 $('#plus').click(function(){
     for (var i=0; i<2; i++) {
         var elem = document.createElement('div') ;
@@ -8,12 +8,17 @@ $('#plus').click(function(){
         $('#'+i+'-cuenta').append(elem) ;
         }
     j++ ;
+    $('#for').attr({"value" : j}) ;
 }) ;
 
 $('#less').click(function(){
     for (var i=0; i<2; i++) {
-        $('#fila'+j+''+i).removeClass('fila') ;
-        $('#fila'+j+''+i).addClass('fila-remove') ;
+        var x = j-1 ;
+        $('#fila'+x+''+i).removeClass('fila') ;
+        $('#fila'+x+''+i).addClass('fila-remove') ;
     }
     j-- ;
+    $('#for').attr({"value" : j}) ;
 }) ;
+
+//$('#form2').clone().appendTo('#'+i+'-cuenta') ;
