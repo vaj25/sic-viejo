@@ -28,13 +28,27 @@
         <td>{{ e.apellido }}</td>
         {% for p in puesto %}
             {% if p.id == e.puesto_id %}
-                <td>{{ p.nom_puesto }}</td>
-                <td>{{ p.salBase }}</td>
-                <td>0</td>
+        <td>{{ p.nom_puesto }}</td>
+         <td>{{ p.salBase }}</td>
+        <td></td>      
                 <td>{{ p.salBase }}</td>
             {% endif %}
         {% endfor %}
+         <td>{{e.isss}}</td>
+        <td>{{e.afp}}</td>
+        <td>{{e.renta}}</td>
+        <td>{{e.salDevengado}}</td>
     </tr>
     {% endfor %}
   </table>
+<br><br><br>
+<form action="" method="POST">{% csrf_token %}
+<label>Horas extras:</label>
+<input type="number" name="horasExtras" id="horasExtras">
+<label>Nombre:</label>
+<input type="text" name="nombre" id="nombre">
+<label>Codigo:</label>
+<input type="text" name="codigo" id="codigo">
+<input type="submit" name="aceptar" id="aceptar" value="Aceptar">
+</form>
 {% endblock %}

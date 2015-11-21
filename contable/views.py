@@ -19,9 +19,18 @@ def inicio(request):
 def planillaEmpleados(request):
     e=Empleado.objects.all()
     p=Puesto.objects.all()
-    for puesto in p:
-        a = float(puesto.salBase)*0.065
-        pass
+    emp=Empleado()
+    pue=Puesto()
+    if request.method=='POST':
+        he=request.POST['horasExtras']
+        cod=request.POST['codigo']
+        emp1=Empleado.objects.get(id=cod)
+        p1=Puesto.objects.get(id=emp1.puesto)
+        emp1.horasExtras=he
+        emp1.salDevengado=(he*p1.pHoraExtra)*salBase
+        emp1.isss=emp1.salDevengado*0.075
+        emp1.afp=emp1.salDevengado*0.0675
+        emp
     return render(request, 'planilla-empleados.html', {'empleado':e, 'puesto':p})
 
 def catalogoCuentas(request):
@@ -168,3 +177,5 @@ def transaccion(request):
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/transaccion')
+    
+    

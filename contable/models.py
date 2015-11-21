@@ -3,6 +3,7 @@ from django.db import models
 class Puesto(models.Model):
     nom_puesto = models.CharField(max_length=30)
     salBase = models.FloatField()
+    pHoraExtra= models.FloatField()
     
 class Empleado(models.Model):
     nombre = models.CharField(max_length=30)

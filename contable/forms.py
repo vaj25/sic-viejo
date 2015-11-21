@@ -37,3 +37,4 @@ class CuentaForm(forms.ModelForm):
     class Meta:
         model = Cuenta
         fields = ("nom_cuenta","saldo")
+        
