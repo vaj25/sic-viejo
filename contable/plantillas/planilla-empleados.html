@@ -11,6 +11,7 @@
 {% block contenido %}
   <table border="1">
     <tr>
+      <th>Codigo</th>
       <th class="nombre">Nombre</th>
       <th class="nombre">Apellidos</th>
       <th class="cargo">Cargo</th>
@@ -23,18 +24,19 @@
       <th>Salario a pagar</th>
     </tr>
     {%for e in empleado %}
-    <tr>
-        <td>{{ e.nombre }}</td>
+    <tr id="{{e.id}}">
+        <td onclick="obtenerEmpleado({{e.id}})" >{{e.id}}</td>
+        <td id="nombre" value="{{ e.nombre }}">{{ e.nombre }}</td>
         <td>{{ e.apellido }}</td>
         {% for p in puesto %}
             {% if p.id == e.puesto_id %}
-        <td>{{ p.nom_puesto }}</td>
-         <td>{{ p.salBase }}</td>
-        <td></td>      
+                <td>{{ p.nom_puesto }}</td>
                 <td>{{ p.salBase }}</td>
+                <td>{{ e.horasExtras }}</td>      
+                <td>{{ p.salDevengado }}</td>
             {% endif %}
         {% endfor %}
-         <td>{{e.isss}}</td>
+        <td>{{e.isss}}</td>
         <td>{{e.afp}}</td>
         <td>{{e.renta}}</td>
         <td>{{e.salDevengado}}</td>

@@ -21,4 +21,8 @@ $('#less').click(function(){
     $('#for').attr({"value" : j}) ;
 }) ;
 
+function obtenerEmpleado(id) {
+    
+}
+
 //$('#form2').clone().appendTo('#'+i+'-cuenta') ;
