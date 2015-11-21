@@ -181,4 +181,16 @@ def transaccion(request):
     else:
         return HttpResponseRedirect('/transaccion')
     
+def eliminar_emp(request):
+    if request.method == 'GET':
+        return render(request ,'eliminar_empleado.html', {'eliminar':Empleado.objects.all()})
+    if request.method=="POST":
+        ele=Empleado.objects.get(id=request.POST['eliminar'])
+        ele.delete()
+        return HttpResponseRedirect('/index')
+    else:
+        return HttpResponseRedirect('/eliminar')
+        
+        
+        
     

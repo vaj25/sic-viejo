@@ -5,6 +5,7 @@ $('#plus').click(function(){
         var form = $('#a').clone() ;
         form.find('select').attr({'id' : 'cuenta'+j}) ;
         form.find('input').attr({'id' : 'monto'+j}) ;
+        form.find('input').attr({'value' : 0}) ;
         form.attr({'id' : 'form'+j})
         form.appendTo('#'+i+'-cuenta') ;
     }
