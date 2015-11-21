@@ -37,9 +37,7 @@ def planillaEmpleados(request):
     return render(request, 'planilla-empleados.html', {'empleado':e, 'puesto':p})
 
 def catalogoCuentas(request):
-    c = Cuenta.objects.all()
-    t = TipoCuenta.objects.all()
-    return render(request, 'catalogo-cuentas.html', {'cuentas':c, 'tipoCuenta':t})
+    return render(request, 'catalogo-cuentas.html', {'cuentas':Cuenta.objects.order_by('tipoCuenta_id'), 'tipoCuenta':TipoCuenta.objects.all()})
 
 def ingresar(request):
     if not request.user.is_anonymous():
