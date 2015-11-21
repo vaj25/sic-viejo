@@ -37,7 +37,9 @@ def planillaEmpleados(request):
     return render(request, 'planilla-empleados.html', {'empleado':e, 'puesto':p})
 
 def catalogoCuentas(request):
-    return render_to_response('catalogo-cuentas.html')
+    c = Cuenta.objects.all()
+    t = TipoCuenta.objects.all()
+    return render(request, 'catalogo-cuentas.html', {'cuentas':c, 'tipoCuenta':t})
 
 def ingresar(request):
     if not request.user.is_anonymous():
@@ -144,6 +146,8 @@ def ingresar_cuenta(request):
                 a.saldo = request.POST['saldo']
                 s=TipoCuenta.objects.get(id=c)
                 a.tipoCuenta = s
+                a.montoCargo=0
+                a.montoAbono=0
                 a.save()
                 return HttpResponseRedirect('/index')
     else:
@@ -175,12 +179,12 @@ def transaccion(request):
         c=Cuenta.objects.get(id=request.POST["cuenta2"])
         u.tipoMonto=tm
         u.cuenta = c
-        u.fecha=time.strftime("%x") 
+        u.fecha=time.strftime("%x")
         u.save()
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/transaccion')
-    
+
 def eliminar_emp(request):
     if request.method == 'GET':
         return render(request ,'eliminar_empleado.html', {'eliminar':Empleado.objects.all()})
@@ -190,7 +194,3 @@ def eliminar_emp(request):
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/eliminar')
-        
-        
-        
-    

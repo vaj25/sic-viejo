@@ -9,7 +9,7 @@ $('#plus').click(function(){
         form.attr({'id' : 'form'+j})
         form.appendTo('#'+i+'-cuenta') ;
     }
-    $('#for').attr({'value' : j}) ;
+    $('#counter').attr({'value' : j}) ;
 }) ;
 
 $('#less').click(function(){
@@ -18,7 +18,7 @@ $('#less').click(function(){
         form = $('#form'+j).addClass('fila-remove');
         j-- ;
     }
-    $('#for').attr({'value' : j}) ;
+    $('#counter').attr({'value' : j}) ;
 }) ;
 
 function obtenerEmpleado(id) {
