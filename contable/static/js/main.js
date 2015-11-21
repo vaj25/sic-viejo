@@ -1,26 +1,23 @@
-
-
-var j = 1 ;
+var j = 2 ;
 $('#plus').click(function(){
-    for (var i=0; i<2; i++) {
-        var elem = document.createElement('div') ;
-        elem.id = 'fila'+j+''+i ;
-        elem.className = 'fila' ;
-        elem.innerHTML = '<select name="" id=""><option value="">Seleccionar cuenta</option></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text">' ;
-        $('#'+i+'-cuenta').append(elem) ;
-        }
-    j++ ;
-    $('#for').attr({"value" : j}) ;
+    for (var i=0; i<2; i++){
+        j++ ;
+        var form = $('#a').clone() ;
+        form.find('select').attr({'id' : 'cuenta'+j}) ;
+        form.find('input').attr({'id' : 'monto'+j}) ;
+        form.attr({'id' : 'form'+j})
+        form.appendTo('#'+i+'-cuenta') ;
+    }
+    $('#for').attr({'value' : j}) ;
 }) ;
 
 $('#less').click(function(){
-    for (var i=0; i<2; i++) {
-        var x = j-1 ;
-        $('#fila'+x+''+i).removeClass('fila') ;
-        $('#fila'+x+''+i).addClass('fila-remove') ;
+    for (var i=0; i<2 ; i++){
+        var form = $('#form'+j).removeClass('fila');
+        form = $('#form'+j).addClass('fila-remove');
+        j-- ;
     }
-    j-- ;
-    $('#for').attr({"value" : j}) ;
+    $('#for').attr({'value' : j}) ;
 }) ;
 
 function obtenerEmpleado(id) {
