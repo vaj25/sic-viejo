@@ -25,12 +25,15 @@ def planillaEmpleados(request):
         he=request.POST['horasExtras']
         cod=request.POST['codigo']
         emp1=Empleado.objects.get(id=cod)
-        p1=Puesto.objects.get(id=emp1.puesto)
+        p1=Puesto.objects.get(id=emp1.puesto_id)
         emp1.horasExtras=he
-        emp1.salDevengado=(he*p1.pHoraExtra)*salBase
-        emp1.isss=emp1.salDevengado*0.075
-        emp1.afp=emp1.salDevengado*0.0675
-        emp
+        emp1.salDevengado=round((float(he)*p1.pHoraExtra)+p1.salBase,2)
+        emp1.isss=round(emp1.salDevengado*0.075,2)
+        emp1.afp=round(emp1.salDevengado*0.0675,2)
+        if emp1.salDevengado>338.67:
+            emp1.renta=round(emp1.salDevengado*0.0083333,2)
+        emp1.salPagar = round(emp1.salDevengado-emp1.isss-emp1.afp-emp1.renta,2)
+        emp1.save()
     return render(request, 'planilla-empleados.html', {'empleado':e, 'puesto':p})
 
 def catalogoCuentas(request):

@@ -11,35 +11,33 @@
 {% block contenido %}
   <table border="1">
     <tr>
-      <th>Codigo</th>
-      <th class="nombre">Nombre</th>
-      <th class="nombre">Apellidos</th>
-      <th class="cargo">Cargo</th>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Cargo</th>
       <th>Salario Base</th>
       <th>Horas extra</th>
       <th>Salario Devengado</th>
-      <th>ISS</th>
+      <th>ISSS</th>
       <th>AFP</th>
       <th>Renta</th>
       <th>Salario a pagar</th>
     </tr>
     {%for e in empleado %}
-    <tr id="{{e.id}}">
-        <td onclick="obtenerEmpleado({{e.id}})" >{{e.id}}</td>
-        <td id="nombre" value="{{ e.nombre }}">{{ e.nombre }}</td>
-        <td>{{ e.apellido }}</td>
+    <tr id="{{e.id}}" onclick="obtenerEmpleado({{e.id}})" >
+        <td id="nombres">{{ e.nombre }}</td>
+        <td id="apellidos">{{ e.apellido }}</td>
         {% for p in puesto %}
             {% if p.id == e.puesto_id %}
-                <td>{{ p.nom_puesto }}</td>
-                <td>{{ p.salBase }}</td>
-                <td>{{ e.horasExtras }}</td>      
-                <td>{{ p.salDevengado }}</td>
+                <td id="puesto">{{ p.nom_puesto }}</td>
+                <td id="salbase">{{ p.salBase }}</td>
+                <td id="he">{{ e.horasExtras }}</td>      
+                <td id="saldev">{{ e.salDevengado }}</td>
             {% endif %}
         {% endfor %}
         <td>{{e.isss}}</td>
         <td>{{e.afp}}</td>
         <td>{{e.renta}}</td>
-        <td>{{e.salDevengado}}</td>
+        <td id="salpagar">{{e.salPagar}}</td>
     </tr>
     {% endfor %}
   </table>

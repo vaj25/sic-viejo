@@ -1,3 +1,5 @@
+
+
 var j = 1 ;
 $('#plus').click(function(){
     for (var i=0; i<2; i++) {
@@ -22,7 +24,10 @@ $('#less').click(function(){
 }) ;
 
 function obtenerEmpleado(id) {
-    
+        $('#nombre').attr({'value' : $('#'+id).find('#nombres').text()}) ;
+        $('#horasExtras').attr({'value': $('#'+id).find('#he').text()}) ;
+        $('#codigo').attr({'value' : id}) ;
+        $('#'+id).addClass('mostrar') ;
 }
 
 //$('#form2').clone().appendTo('#'+i+'-cuenta') ;
