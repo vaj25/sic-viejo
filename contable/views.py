@@ -163,9 +163,9 @@ def transaccion(request):
         tm=TipoMonto()
         c=Cuenta()
         u=Transaccion()
-        t.monto=request.POST['monto1']
+        t.monto=request.POST['monto3']
         tm=TipoMonto.objects.get(id="1")
-        z=request.POST['cuenta1']
+        z=request.POST['cuenta3']
         c=Cuenta.objects.get(id=z)
         t.tipoMonto=tm
         t.cuenta = c

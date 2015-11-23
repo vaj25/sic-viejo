@@ -4,9 +4,11 @@ $('#plus').click(function(){
         j++ ;
         var form = $('#a').clone() ;
         form.find('select').attr({'id' : 'cuenta'+j}) ;
+        form.find('select').attr({'name' : 'cuenta'+j}) ;
         form.find('input').attr({'id' : 'monto'+j}) ;
+        form.find('input').attr({'name' : 'monto'+j}) ;
         form.find('input').attr({'value' : 0}) ;
-        form.attr({'id' : 'form'+j})
+        form.attr({'id' : 'form'+j}) ;
         form.appendTo('#'+i+'-cuenta') ;
     }
     $('#counter').attr({'value' : j}) ;
