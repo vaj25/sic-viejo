@@ -33,8 +33,3 @@ class EmpleadoForm(forms.ModelForm):
         fields = ("nombre","apellido","dui","nit")
         
         
-class CuentaForm(forms.ModelForm):
-    class Meta:
-        model = Cuenta
-        fields = ("nom_cuenta","saldo")
-        

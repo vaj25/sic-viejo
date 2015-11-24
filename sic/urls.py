@@ -15,20 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from contable.views import ingresar,inicio,nuevo_usuario, transaccion, planillaEmpleados,eliminar_emp, catalogoCuentas, inicio
+from contable.views import ingresar,inicio,nuevo_usuario, transaccion, planillaEmpleados,eliminar_emp,error
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)) ,
-    url(r'^index/', inicio) ,
+    url(r'^index/', 'contable.views.inicio') ,
     url(r'^ingresar/$', 'contable.views.ingresar') ,
-    url(r'^usuario/nuevo$','contable.views.nuevo_usuario') ,
-    url(r'^cerrar/$', 'contable.views.cerrar') ,
-    url(r'^empleado/', 'contable.views.ingresar_empleado') ,
-    url(r'^cuenta/', 'contable.views.ingresar_cuenta') ,
+    url(r'^usuario/nuevo$','contable.views.nuevo_usuario'),
+    url(r'^cerrar/$', 'contable.views.cerrar'),
+    url(r'^empleado/', 'contable.views.ingresar_empleado'),
+    url(r'^cuenta/', 'contable.views.ingresar_cuenta'),
     url(r'^planilla/empleados', planillaEmpleados) ,
-    url(r'^catalogo/cuentas', catalogoCuentas) ,
-    url(r'^$',ingresar) ,
+    url(r'^catalogo/cuentas', 'contable.views.catalogoCuentas') ,
+    url(r'^$',ingresar),
     url(r'^transaccion', transaccion) ,
     url(r'^eliminar', eliminar_emp) ,
-
+    url(r'^error', error) ,   
+    
 ]

@@ -2,11 +2,6 @@
 {% block static %}
 <link rel="stylesheet" href="../static/css/form.css">
 {% endblock %}
-
-{% block titulo %}
-    Registrar Cuenta
-{% endblock %}
-
 {% block menu %}
   {% include 'menu.html' %}
 {% endblock %}
@@ -15,17 +10,19 @@
 <form action="/cuenta/" method="post">{% csrf_token %}
 <ul>
 
-{{ cuentForm.as_ul }}
+    <li>
+        <label>Nombre de la Cuenta:</label>
+        <input name="nom_cuenta" type="text" id="nom_cuenta">
+    </li>
     
-     <li>  <label>Tipo Cuenta:</label> 
-    <select name="Cuenta"> 
-  
-  <option value="0">Seleccionar</option>
-  <option value="1">Activo</option>
-  <option value="2">Pasivo</option>
-  <option value="3">Capital</option>
-  <option value="4">Resultado</option>
-</select> </li>
+    <li><label>Tipo Cuenta:</label> 
+    <select name="Cuenta">
+      <option value="0">Seleccionar</option>
+        {% for t in tipo %}
+                 <option value="{{ t.id }}">{{t.nom_Tipocuenta}}</option>
+                            {% endfor %}
+      
+    </select> </li>
 
 </ul>
 

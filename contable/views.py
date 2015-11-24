@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from contable.forms import UserCreationForm,EmpleadoForm,CuentaForm
+from contable.forms import UserCreationForm,EmpleadoForm
 from contable.models import Empleado,Puesto,Cuenta,TipoCuenta,Transaccion, TipoMonto
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -15,6 +15,9 @@ import time
 @login_required(login_url='/ingresar')
 def inicio(request):
     return render_to_response('index.html')
+
+def error(request):
+    return render_to_response('error.html')
 
 def planillaEmpleados(request):
     e=Empleado.objects.all()
@@ -131,54 +134,91 @@ def ingresar_empleado(request):
 
 
 def ingresar_cuenta(request):
+    if request.method == 'GET':
+        return render(request ,'registrar_cuenta.html', {'tipo':TipoCuenta.objects.all()})
     if request.POST:
-        cuentForm=CuentaForm(request.POST)
-        if cuentForm.is_valid():
-            c=request.POST['Cuenta']
-            if (c=="0"):
-                return HttpResponseRedirect('/cuenta')
-            else:
-                a = Cuenta()
-                s = TipoCuenta()
-                a.nom_cuenta = request.POST['nom_cuenta']
-                a.saldo = request.POST['saldo']
-                s=TipoCuenta.objects.get(id=c)
-                a.tipoCuenta = s
-                a.montoCargo=0
-                a.montoAbono=0
-                a.save()
-                return HttpResponseRedirect('/index')
-    else:
-        cuentForm=CuentaForm()
-    args={}
-    args.update(csrf(request))
-    args['cuentForm'] = cuentForm
-    return render_to_response('registrar_cuenta.html', args)
+        c=request.POST['Cuenta']
+        if (c=="0"):
+            return HttpResponseRedirect('/cuenta')
+        else:
+            a = Cuenta()
+            s = TipoCuenta()
+            a.nom_cuenta = request.POST['nom_cuenta']
+            a.saldo = 0
+            s=TipoCuenta.objects.get(id=c)
+            a.tipoCuenta = s
+            a.montoCargo=0
+            a.montoAbono=0
+            a.save()
+            return HttpResponseRedirect('/index')
+    return render(request,'registrar_cuenta.html')
 
 def transaccion(request):
     if request.method == "GET":
         return render(request ,'form-transaccion.html', {'cuentas':Cuenta.objects.all()})
-    if request.method=="POST":
-        t=Transaccion()
-        tm=TipoMonto()
-        c=Cuenta()
-        u=Transaccion()
-        t.monto=request.POST['monto3']
-        tm=TipoMonto.objects.get(id="1")
-        z=request.POST['cuenta3']
-        c=Cuenta.objects.get(id=z)
-        t.tipoMonto=tm
-        t.cuenta = c
-        t.fecha=time.strftime("%x")
-        t.save()
-
-        u.monto=request.POST['monto2']
-        tm=TipoMonto.objects.get(id="2")
-        c=Cuenta.objects.get(id=request.POST["cuenta2"])
-        u.tipoMonto=tm
-        u.cuenta = c
-        u.fecha=time.strftime("%x")
-        u.save()
+    
+    if request.method=="POST":    
+        count=int(request.POST['counter'])
+        i=1
+        l=1
+        montoCa=0
+        montoAb=0
+        for k in range(count):
+            var1='cuenta'+str(l)
+            var2='monto'+str(l)
+            mont=float(request.POST[var2])
+            #cid=Cuenta.objects.get(id=request.POST[var1])
+            #tc1=TipoCuenta.objects.get(id=1)
+            #tc2=TipoCuenta.objects.get(id=2)
+            #tc3=TipoCuenta.objects.get(id=3)
+            #tc4=TipoCuenta.objects.get(id=4)
+            #if cid.tipoCuenta==tc4: #es resultado
+            if l%2==0: #es abono
+                montoAb=montoAb+mont
+            else:
+                montoCa=montoCa+mont
+            #if cid.tipoCuenta==tc1: #si es activo
+                #activo=activo+mont
+            #if cid.tipoCuenta==tc2:
+                #pasivo=pasivo+mont
+            #if cid.tipoCuenta==tc3:
+                #pasivo=pasivo+mont
+            l=l+1
+        if montoCa==montoAb: #partida doble
+            for j in range(count): 
+                c=Cuenta()
+                #t=Transaccion()
+                #tc=TipoCuenta()
+                var1='cuenta'+str(i)
+                var2='monto'+str(i)
+                monto=float(request.POST[var2])            
+                c=Cuenta.objects.get(id=request.POST[var1])
+                tm1=TipoMonto.objects.get(id=1)
+                tm2=TipoMonto.objects.get(id=2)
+                #t.monto=monto
+                #t.cuenta=c
+                if i%2==0:
+                    #t.tipoMonto=tm2  #es abono
+                    c.montoAbono=c.montoAbono+monto
+                else:
+                    #t.tipoMonto=tm1   #es cargo
+                    c.montoCargo=c.montoCargo+monto
+                #if t.tipoMonto==tm1: #si es cargo
+                    #if c.tipoCuenta==1:#si es activo
+                        #c.montoCargo=c.montoCargo+monto
+                    #else:   # es pasaivo,capital o resultado
+                        #c.montoAbono=c.montoAbono+monto
+                #if t.tipoMonto==tm2: #si es abono
+                    #if c.tipoCuenta==1: #si es activo
+                        #c.montoAbono=c.montoAbono+monto
+                    #else: #si es pasivo, capital o resultado
+                        #c.montoCargo=c.montoCargo+monto
+                #t.fecha=time.strftime("%x")
+                #t.save()
+                c.save()
+                i=i+1
+        else:
+            return HttpResponseRedirect('/error')
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/transaccion')
@@ -192,3 +232,7 @@ def eliminar_emp(request):
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/eliminar')
+        
+        
+        
+    
