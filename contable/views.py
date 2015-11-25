@@ -70,21 +70,8 @@ def nuevo_usuario(request):
 		return HttpResponseRedirect('../index')
 	if request.method=='POST':
 		formulario=UserCreationForm(request.POST)
-		#clave1 = request.POST['password1']
-		#clave2 = request.POST['password2']
 
 		if formulario.is_valid():# and (clave1 == clave2):
-		#	p = Perfil()
-		#	p.nickname = request.POST['username']
-		#	p.password = request.POST['password1']
-		#	p.email = request.POST['email']
-		#	p.save()
-		#	m=Puntaje()
-		#	m.credito=1000.0
-		#	m.partidasGanadas=0
-		#	m.perfil_id=p.id
-		#	m.save()
-
 			formulario.save()
 			return HttpResponseRedirect('/')
 		#else:
@@ -240,3 +227,16 @@ def comprobacion(request):
             monto1 = monto1 + monto
         tran.save()
     return render(request, 'comprobacion.html', {'transaccion':trans,'cuenta':c, 'm1': monto1, 'm2': monto2})
+
+def resultado(request):
+    c=Cuenta.objects.filter(tipoCuenta=4)
+    t=Transaccion.objects.all()
+    util = 0
+    for cuenta in c :
+        util = util + cuenta.saldo
+    if util < 0:
+        util = util * -1
+        haber = 1
+    else:
+        haber = 2
+    return render(request,'resultado.html',{'transaccion':t,'cuenta':c, 'saldo' : util, 'haber' : haber})

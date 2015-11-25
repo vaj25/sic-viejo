@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from contable.views import ingresar,inicio,nuevo_usuario, transaccion, planillaEmpleados,eliminar_emp,error,comprobacion
+from contable.views import ingresar,inicio,nuevo_usuario, transaccion, planillaEmpleados,eliminar_emp,error,comprobacion, resultado
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)) ,
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^transaccion', transaccion) ,
     url(r'^eliminar', eliminar_emp) ,
     url(r'^comprobacion', comprobacion) ,
-    url(r'^error', error) ,   
-    
+    url(r'^resultado', resultado) ,
+    url(r'^error', error) ,
+
 ]
