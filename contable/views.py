@@ -166,17 +166,22 @@ def transaccion(request):
         for k in range(count):
             var1='cuenta'+str(l)
             var2='monto'+str(l)
-            mont=float(request.POST[var2])
+            if (request.POST[var2]) == '':
+                mont=0
+            else:
+                mont=float(request.POST[var2])
+            cuent=int(request.POST[var1])
             #cid=Cuenta.objects.get(id=request.POST[var1])
             #tc1=TipoCuenta.objects.get(id=1)
             #tc2=TipoCuenta.objects.get(id=2)
             #tc3=TipoCuenta.objects.get(id=3)
             #tc4=TipoCuenta.objects.get(id=4)
             #if cid.tipoCuenta==tc4: #es resultado
-            if l%2==0: #es abono
-                montoAb=montoAb+mont
-            else:
-                montoCa=montoCa+mont
+            if cuent!=0:
+                if l%2==0: #es abono
+                    montoAb=montoAb+mont
+                else:
+                    montoCa=montoCa+mont
             #if cid.tipoCuenta==tc1: #si es activo
                 #activo=activo+mont
             #if cid.tipoCuenta==tc2:
@@ -185,37 +190,40 @@ def transaccion(request):
                 #pasivo=pasivo+mont
             l=l+1
         if montoCa==montoAb: #partida doble
-            for j in range(count): 
-                c=Cuenta()
-                #t=Transaccion()
-                #tc=TipoCuenta()
+            for j in range(count):
                 var1='cuenta'+str(i)
-                var2='monto'+str(i)
-                monto=float(request.POST[var2])            
-                c=Cuenta.objects.get(id=request.POST[var1])
-                tm1=TipoMonto.objects.get(id=1)
-                tm2=TipoMonto.objects.get(id=2)
-                #t.monto=monto
-                #t.cuenta=c
-                if i%2==0:
-                    #t.tipoMonto=tm2  #es abono
-                    c.montoAbono=c.montoAbono+monto
-                else:
-                    #t.tipoMonto=tm1   #es cargo
-                    c.montoCargo=c.montoCargo+monto
-                #if t.tipoMonto==tm1: #si es cargo
-                    #if c.tipoCuenta==1:#si es activo
-                        #c.montoCargo=c.montoCargo+monto
-                    #else:   # es pasaivo,capital o resultado
-                        #c.montoAbono=c.montoAbono+monto
-                #if t.tipoMonto==tm2: #si es abono
-                    #if c.tipoCuenta==1: #si es activo
-                        #c.montoAbono=c.montoAbono+monto
-                    #else: #si es pasivo, capital o resultado
-                        #c.montoCargo=c.montoCargo+monto
-                #t.fecha=time.strftime("%x")
-                #t.save()
-                c.save()
+                cuent=int(request.POST[var1])
+                if cuent!=0:
+                    c=Cuenta()
+                    #t=Transaccion()
+                    #tc=TipoCuenta()
+                    var1='cuenta'+str(i)
+                    var2='monto'+str(i)
+                    monto=float(request.POST[var2])            
+                    c=Cuenta.objects.get(id=request.POST[var1])
+                    tm1=TipoMonto.objects.get(id=1)
+                    tm2=TipoMonto.objects.get(id=2)
+                    #t.monto=monto
+                    #t.cuenta=c
+                    if i%2==0:
+                        #t.tipoMonto=tm2  #es abono
+                        c.montoAbono=c.montoAbono+monto
+                    else:
+                        #t.tipoMonto=tm1   #es cargo
+                        c.montoCargo=c.montoCargo+monto
+                    #if t.tipoMonto==tm1: #si es cargo
+                        #if c.tipoCuenta==1:#si es activo
+                            #c.montoCargo=c.montoCargo+monto
+                        #else:   # es pasaivo,capital o resultado
+                            #c.montoAbono=c.montoAbono+monto
+                    #if t.tipoMonto==tm2: #si es abono
+                        #if c.tipoCuenta==1: #si es activo
+                            #c.montoAbono=c.montoAbono+monto
+                        #else: #si es pasivo, capital o resultado
+                            #c.montoCargo=c.montoCargo+monto
+                    #t.fecha=time.strftime("%x")
+                    #t.save()
+                    c.save()
                 i=i+1
         else:
             return HttpResponseRedirect('/error')
