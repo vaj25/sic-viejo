@@ -156,8 +156,8 @@ def ingresar_cuenta(request):
 def transaccion(request):
     if request.method == "GET":
         return render(request ,'form-transaccion.html', {'cuentas':Cuenta.objects.all()})
-    
-    if request.method=="POST":    
+
+    if request.method=="POST":
         count=int(request.POST['counter'])
         i=1
         l=1
@@ -171,23 +171,11 @@ def transaccion(request):
             else:
                 mont=float(request.POST[var2])
             cuent=int(request.POST[var1])
-            #cid=Cuenta.objects.get(id=request.POST[var1])
-            #tc1=TipoCuenta.objects.get(id=1)
-            #tc2=TipoCuenta.objects.get(id=2)
-            #tc3=TipoCuenta.objects.get(id=3)
-            #tc4=TipoCuenta.objects.get(id=4)
-            #if cid.tipoCuenta==tc4: #es resultado
             if cuent!=0:
                 if l%2==0: #es abono
                     montoAb=montoAb+mont
                 else:
                     montoCa=montoCa+mont
-            #if cid.tipoCuenta==tc1: #si es activo
-                #activo=activo+mont
-            #if cid.tipoCuenta==tc2:
-                #pasivo=pasivo+mont
-            #if cid.tipoCuenta==tc3:
-                #pasivo=pasivo+mont
             l=l+1
         if montoCa==montoAb: #partida doble
             for j in range(count):
@@ -195,11 +183,9 @@ def transaccion(request):
                 cuent=int(request.POST[var1])
                 if cuent!=0:
                     c=Cuenta()
-                    #t=Transaccion()
-                    #tc=TipoCuenta()
                     var1='cuenta'+str(i)
                     var2='monto'+str(i)
-                    monto=float(request.POST[var2])            
+                    monto=float(request.POST[var2])
                     c=Cuenta.objects.get(id=request.POST[var1])
                     tm1=TipoMonto.objects.get(id=1)
                     tm2=TipoMonto.objects.get(id=2)
@@ -211,18 +197,7 @@ def transaccion(request):
                     else:
                         #t.tipoMonto=tm1   #es cargo
                         c.montoCargo=c.montoCargo+monto
-                    #if t.tipoMonto==tm1: #si es cargo
-                        #if c.tipoCuenta==1:#si es activo
-                            #c.montoCargo=c.montoCargo+monto
-                        #else:   # es pasaivo,capital o resultado
-                            #c.montoAbono=c.montoAbono+monto
-                    #if t.tipoMonto==tm2: #si es abono
-                        #if c.tipoCuenta==1: #si es activo
-                            #c.montoAbono=c.montoAbono+monto
-                        #else: #si es pasivo, capital o resultado
-                            #c.montoCargo=c.montoCargo+monto
-                    #t.fecha=time.strftime("%x")
-                    #t.save()
+                    c.saldo = c.montoCargo - c.montoAbono
                     c.save()
                 i=i+1
         else:
@@ -240,7 +215,28 @@ def eliminar_emp(request):
         return HttpResponseRedirect('/index')
     else:
         return HttpResponseRedirect('/eliminar')
-        
-        
-        
-    
+
+def comprobacion(request):
+    c=Cuenta.objects.order_by('tipoCuenta_id')
+    tm1=TipoMonto.objects.get(id=1)
+    tm2=TipoMonto.objects.get(id=2)
+    trans = Transaccion.objects.all()
+    monto1 = 0
+    monto2 = 0
+    for t in trans:
+        t.delete()
+    for cuenta in c:
+        tran=Transaccion()
+        monto=float(cuenta.saldo)
+        if monto<0:
+            tran.monto=monto*(-1)
+            tran.tipoMonto=tm2
+            tran.cuenta=cuenta
+            monto2 = monto2 + monto*(-1)
+        else:
+            tran.monto=monto
+            tran.cuenta=cuenta
+            tran.tipoMonto=tm1
+            monto1 = monto1 + monto
+        tran.save()
+    return render(request, 'comprobacion.html', {'transaccion':trans,'cuenta':c, 'm1': monto1, 'm2': monto2})
