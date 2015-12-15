@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block titulo %}
-    Estado de Resultado
+    Estado de Capital
 {% endblock %}
 
 {% block menu %}
@@ -13,7 +13,7 @@
 {% endblock %}T
 {% block contenido %}
     <table>
-       <caption>Estado de Resultado</caption>
+       <caption>Estado de Capital</caption>
         <tr>
             <th>Nombre</th>
             <th>Debe</th>
@@ -42,10 +42,21 @@
             <td>Utilidad</td>
             {% if haber == 1 %}
                 <td></td>
-                <td>{{saldo}}</td>
+                <td>{{util}}</td>
             {% endif %}
             {% if haber == 2 %}
-                <td>{{saldo}}</td>
+                <td>{{util}}</td>
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Capital Contable</td>
+            {% if haberc == 1 %}
+                <td></td>
+                <td>{{cap}}</td>
+            {% endif %}
+            {% if haber == 2 %}
+                <td>{{cap}}</td>
                 <td></td>
             {% endif %}
         </tr>

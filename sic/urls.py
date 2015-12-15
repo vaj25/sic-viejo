@@ -13,17 +13,17 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+
 from django.conf.urls import include, url
 from django.contrib import admin
-from contable.views import ingresar,inicio,nuevo_usuario, transaccion, planillaEmpleados,eliminar_emp,error,comprobacion, resultado
+from contable.views import ingresar ,inicio ,transaccion ,planillaEmpleados ,eliminar_emp ,comprobacion ,resultado ,capital ,general ,libroDiario ,ajustes ,acercaDe ,cerrarPeriodo ,costos ,peranteriores ,iniciarPeriodo ,ingresarUsuario ,ingresar_empleado
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)) ,
-    url(r'^index/', 'contable.views.inicio') ,
-    url(r'^ingresar/$', 'contable.views.ingresar') ,
-    url(r'^usuario/nuevo$','contable.views.nuevo_usuario'),
+    url(r'^index/', inicio) ,
+    url(r'^ingresar/$',ingresar) ,
     url(r'^cerrar/$', 'contable.views.cerrar'),
-    url(r'^empleado/', 'contable.views.ingresar_empleado'),
+    url(r'^empleado/', ingresar_empleado),
     url(r'^cuenta/', 'contable.views.ingresar_cuenta'),
     url(r'^planilla/empleados', planillaEmpleados) ,
     url(r'^catalogo/cuentas', 'contable.views.catalogoCuentas') ,
@@ -32,6 +32,14 @@ urlpatterns = [
     url(r'^eliminar', eliminar_emp) ,
     url(r'^comprobacion', comprobacion) ,
     url(r'^resultado', resultado) ,
-    url(r'^error', error) ,
-
+    url(r'^capital', capital) ,
+    url(r'^general', general) ,
+    url(r'^libroDiario', libroDiario) ,
+    url(r'^ajustes', ajustes) ,
+    url(r'^acercaDe', acercaDe) ,
+    url(r'^cerrarPeriodo', cerrarPeriodo) ,
+    url(r'^costos', costos) ,
+    url(r'^perant', peranteriores) ,
+    url(r'^iniciarPeriodo', iniciarPeriodo) ,
+    url(r'^ingresarUsuario', ingresarUsuario) ,
 ]

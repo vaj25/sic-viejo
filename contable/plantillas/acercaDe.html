@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block static %}
+    <link rel="stylesheet" href="../static/css/tabla.css">
+{% endblock %}
+
+{% block titulo %}
+Acerca De
+{% endblock %}
+
+{% block menu %}
+  {% include 'menu.html' %}
+{% endblock %}
+{% block contenido %}
+    <p style="font-size: 2em; text-align: center ;"> <strong>
+        Universidad de El Salvador <br>
+        Facultad de Ingenier&iacute;a y Arquitectura <br>
+        Escuela de Ingenier&iacute;a Industrial <br>
+        C&aacute;tedra Sistemas Contables 2015 <br>
+        </strong>
+    </p>
+    <table>
+        <caption class="logo"><img src="../static/img/UES-logo.png" height="250"></caption>
+        <tr>
+            <th>Apellidos</th>
+            <th>Nombres</th>
+            <th>Carnet</th>
+        </tr>
+        <tr>
+            <td>Herrera Criollo</td>
+            <td>Moisés Daniel</td>
+            <td>HC12010</td>
+        </tr>
+        <tr>
+            <td>Jovel Torres</td>
+            <td>Samuel Enrique</td>
+            <td>JT11001</td>
+        </tr>
+        <tr>
+            <td>Osorio Morán</td>
+            <td>José Luis</td>
+            <td>OM13001</td>
+        </tr>
+        <tr>
+            <td>Sánchez Castaneda</td>
+            <td>Vladimir Alberto</td>
+            <td>SC13014</td>
+        </tr>
+        <tr>
+            <td>Tobar  Hernández</td>
+            <td>Pablo Javier</td>
+            <td>TH06008</td>
+        </tr>
+    </table>
+    <p style=" text-align: center ">
+        Sistema Contable para la Clinica Psicol&oacute;gica Amaya, desarrollado por estudiantes de Ingenieria de Sistemas Inform&aacute;ticos. 
+    </p>
+<center>
+    <p>
+        <strong>Agradecimientos especiales:</strong>
+    </p>
+    
+    <p>
+        Inga. Jeannette Elizabeth S&aacute;nchez de Pocasangre
+    </p>
+    </center>
+{% endblock %}

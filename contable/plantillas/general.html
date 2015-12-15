@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block titulo %}
-    Estado de Resultado
+    Balance General
 {% endblock %}
 
 {% block menu %}
@@ -13,7 +13,7 @@
 {% endblock %}T
 {% block contenido %}
     <table>
-       <caption>Estado de Resultado</caption>
+       <caption>Balance General</caption>
         <tr>
             <th>Nombre</th>
             <th>Debe</th>
@@ -21,7 +21,24 @@
         </tr>
         {% for t in transaccion %}
             <tr>
-                {% for c in cuenta %}
+                {% for c in activos %}
+                    {% if t.cuenta_id == c.id %}
+                        <td>{{c.nom_cuenta}}</td>
+                    {% endif %}
+                    {% if t.cuenta_id == c.id %}
+                    {% if t.tipoMonto_id == 1 %}
+                        <td>{{t.monto}}</td>
+                        <td></td>
+                    {% endif %}
+                    {% if t.tipoMonto_id == 2 %}
+                        <td></td>
+                        <td>{{t.monto}}</td>
+                    {% endif %}
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for c in pasivos %}
                     {% if t.cuenta_id == c.id %}
                         <td>{{c.nom_cuenta}}</td>
                     {% endif %}
@@ -39,15 +56,20 @@
             </tr>
         {% endfor %}
         <tr>
-            <td>Utilidad</td>
+            <td>Capital Contable</td>
             {% if haber == 1 %}
                 <td></td>
-                <td>{{saldo}}</td>
+                <td>{{cap}}</td>
             {% endif %}
             {% if haber == 2 %}
-                <td>{{saldo}}</td>
+                <td>{{cap}}</td>
                 <td></td>
             {% endif %}
+        </tr>
+        <tr>
+            <td><strong>Total</strong></td>
+                <td><strong>{{cargo}}</strong></td>
+                <td><strong>{{abono}}</strong></td>
         </tr>
     </table>
 {% endblock %}

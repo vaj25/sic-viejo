@@ -1,7 +1,32 @@
-.nombre{
-    width: 250px ;
+table{
+    border: 1px solid #000 ;
 }
 
-.cargo{
-    width: 100px ;
+td {
+    border: 1px solid #000 ;
+    padding-left: 6px ;
+    padding: 2px ;
+}
+
+th {
+    border: 3px solid #666 ;
+    padding: 2px ;
+}
+
+caption {
+    font-size: 1em ;
+    color: #E30022 ;
+    text-transform: uppercase ;
+    letter-spacing: 1px;
+    font-weight: bold ;
+    padding: 5px ;
+    border: 2px solid #000 ;
+}
+
+.empleado {
+    cursor: default ;
+}
+
+.logo {
+    border: 0px ;
 }
